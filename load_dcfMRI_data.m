@@ -17,9 +17,18 @@ sigma_filt=(acq_par.sp_FWHM/2.355)./acq_par.in_plane_res;
 %aysemmtric 3D filter taking into account the slice width
 dc_data.gm_pve=imgaussian_asy(gm_pve,sigma_filt,acq_par.slice_res/acq_par.in_plane_res);
 
-D_prior=dc_data.gm_pve.*0.15; % assign D prior
-D_prior(le(D_prior,0.05))=0.05; %set lower limit for D prior... needed due to problems with FAST for correctly identifiying grey matter
-% more problematic for deep grey matter 
+perf_un_nii=load_untouch_nii([processed_dir, 'perf_unscaled.nii.gz']);
+perf_un=double(perf_un_nii.img);
+
+perf_vect=sort(perf_un(:),'descend');
+max_perf=nanmedian(perf_vect(1:100));
+
+perf_un=perf_un./max_perf;
+D_prior=perf_un.*0.15; %assume max D is around 0.15
+D_prior(le(D_prior,0))=0;
+D_prior(isinf(D_prior))=0;
+D_prior(isnan(D_prior))=0;
+
 
 M0_mask=squeeze(dc_data.M0_3D(:,:,:,1));
 M0_mask(le(M0_mask,acq_par.M0thr))=0; % needs to be set appropriately for data acquisition

@@ -11,7 +11,6 @@ D_est=zeros(acq_par.x_ax,acq_par.y_ax,acq_par.z_ax);
 resid_est=zeros(acq_par.x_ax,acq_par.y_ax,acq_par.z_ax);
 
 for selected_slice=1:acq_par.z_ax
-%for selected_slice=8:8
 
 disp(['processing slice ' int2str(selected_slice)]);
 disp(' ');
@@ -82,9 +81,6 @@ current_x=1;
 % 
 for i=1:acq_par.x_ax
     for j=1:acq_par.y_ax
-
-% for i=16:16
-%     for j=40:40
 
         
         if i>current_x %output progress of anlaysis to screen

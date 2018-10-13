@@ -50,9 +50,9 @@ options=optimset('display','off'); %set bounds to stay within D lookup table
 %% Objective function
 obj_norm=norm([obj_weight.*(echo1_est-echo1_in)./500; (1-obj_weight).*(echo2_est-echo2_in)./500]);
 
-reg_factor=obj_norm/15; %sim optimisation 23.5 (25) from optimisation
+reg_factor=obj_norm/23.5;
 %for minimal bias and rms error in D and OEF use both for regularisation
-y=[obj_weight.*(echo1_est-echo1_in)./500; (1-obj_weight).*(echo2_est-echo2_in)./500; reg_factor*x(2); 2*reg_factor*(OEF0-0.4)];
+y=[obj_weight.*(echo1_est-echo1_in)./500; (1-obj_weight).*(echo2_est-echo2_in)./500; reg_factor*x(2); 4.2*reg_factor*(OEF0-0.4)];
 
 
     end
